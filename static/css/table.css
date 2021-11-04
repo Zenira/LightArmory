@@ -1,0 +1,59 @@
+table>tbody>tr>td {vertical-align: middle !important;}
+
+/* Custom style for filter input */
+input.tablesorter-filter, select.tablesorter-filter {
+	display: block;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}	
+select.tablesorter-filter {
+	text-transform: capitalize;
+}
+
+/*** custom css only popup ***/
+.columnSelectorWrapper {
+  position: relative;
+  margin: 10px 0;
+  display: inline-block;
+}
+.columnSelector, .hidden {
+  display: none;
+}
+#colSelect1:checked ~ #columnSelector {
+  display: block;
+}
+.columnSelector {
+  width: 120px;
+  position: absolute;
+  top: 30px;
+  padding: 10px;
+  background: #fff;
+  border: #dbdbdb 1px solid;
+  border-radius: 5px;
+}
+.columnSelector label {
+  display: block;
+}
+.columnSelector label:nth-child(1) {
+  border-bottom: #dbdbdb solid 1px;
+  margin-bottom: 5px;
+}
+.columnSelector input {
+  margin-right: 5px;
+}
+.columnSelector .disabled {
+  color: #ddd;
+}
