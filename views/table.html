@@ -1,0 +1,58 @@
+<script>
+	$(document).ready (function() {
+		var widgetOptions ={
+			columnSelector_container : $('#columnSelector'),
+			columnSelector_name : 'data-name',
+			reflow_headerAttrib : 'data-name'
+		};
+		<% if (typeof tablesorterWidgetOptions !== 'undefined') { %>		
+			var tsWidgetOptions = <%-JSON.stringify(tablesorterWidgetOptions)%>;
+			$.extend(widgetOptions, tsWidgetOptions);
+		<% } %>
+		var tablesorterConfig = {		
+			widgets: ['columnSelector', 'filter'],
+			widgetOptions : widgetOptions
+		};
+		$("#table_<%= tableName %>").tablesorter(tablesorterConfig);
+	});
+</script>
+
+<link rel="stylesheet" href="/static/css/jquery.tablesorter.pager.min.css">
+<link rel="stylesheet" href="/static/css/theme.bootstrap.css">
+<link rel="stylesheet" href="/static/css/table.css">
+
+<script type="text/javascript" src="/static/js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.tablesorter.widgets.min.js"></script>
+<script src="/static/js/widgets/widget-columnSelector.min.js"></script>
+
+<div class="columnSelectorWrapper">
+  <input id="colSelect1" type="checkbox" class="hidden">
+  <label class="columnSelectorButton btn btn-default" for="colSelect1">Select Columns</label>
+  <div id="columnSelector" class="columnSelector"></div>
+</div>
+
+<div class="table-responsive">
+	<table id="table_<%= tableName %>" class="table table-hover table-condensed responsive">
+		<thead>
+        	<tr>
+                <% for (var header in headers) { %>
+                <th><%- headers[header] %></th>
+                <% } %>
+        	</tr>
+        </thead>
+		<tbody>
+        	<% if (rows.length == 0) { %>
+            	<tr><td colspan="<%= headers.length %>">No results</td></tr>
+            <% } else { %>
+             <%	for (var row in rows) { 
+             		var row = rows[row];  %>
+                    <tr>
+                        <% for (var field_name in row) { %>
+                            <td><%- row[field_name] %></td>
+                        <% } %>
+                    </tr>
+           	 <%	} %>
+            <% } %>
+        </tbody>
+	</table>
+</div>

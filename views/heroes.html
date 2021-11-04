@@ -1,0 +1,75 @@
+<% include header.html %>
+
+<style>
+	/*table thead tr th:first-child { width: 40px !important; }	
+	#table_heroes thead tr > td:first-child > input.tablesorter-filter{ display: none !important;}*/
+</style>
+	<div class="row">
+		<div class="col-lg-12 row-content">
+
+			<% if(locals.hero) { %>
+				<h2><%- locals.hero.HeroName %></h2>
+            	<table>
+                	<tr>
+                    	<td>Grade</td>
+                    	<td><%- getHeroStars(locals.hero.HeroGrade) %></td>
+                    </tr>
+                	<tr>
+                    	<td>Attribute</td>
+                    	<td><%- getHeroAttribute(locals.hero.HeroAttribute) %></td>
+                    </tr>
+                	<tr>
+                    	<td>Class</td>
+                    	<td><%- locals.hero.HeroClass %></td>
+                    </tr>
+                </table>
+			<% } else if (locals.error) { %>
+				<% switch (locals.error) {
+					case 'invalid_hero': %>
+						404 Hero Not Found
+					<%	break;
+				} %>				
+			<% } else if(locals.page_name == "all_heroes") {
+                
+                // Table Settings
+                var tableName = 'heroes';
+                var headers = ['Name', 'Grade', 'Attribute', 'Class', 'Leader Skill'];
+                var tablesorterWidgetOptions = {
+					filter_functions : {
+						1 : true,
+						2 : true,
+						3 : true
+					}
+				};
+							  
+                var rows = [];
+				if (data.length > 0) {
+					for (var i in data) {
+						var dataRow = data[i];
+						var row = {};
+						var HeroIcon = getHeroIcon(dataRow.HeroName, dataRow.HeroGradeIcon);
+						row.HeroName = HeroIcon + getHeroNameLink(dataRow.HeroName);
+						row.HeroGrade = getHeroStars(dataRow.HeroGrade);
+						if (dataRow.HeroAttribute !== null) {
+							row.HeroAttribute = getHeroAttribute(dataRow.HeroAttribute);
+						} else {
+							row.HeroAttribute = '';
+						}
+						row.HeroClass = dataRow.HeroClass; 
+						if (dataRow.HeroClass === '' || dataRow.HeroClass === null) row.HeroClass = '-';
+									
+						/* TODO: Add to Database */
+						row.HeroLeaderSkill = '';
+						
+						rows.push(row);
+					}
+				}
+             %>
+				<% include table.html %>
+			<% } else { %>				
+				You have reached this page in error.			
+			<% } %>
+			
+		</div>
+
+<% include footer.html %>
